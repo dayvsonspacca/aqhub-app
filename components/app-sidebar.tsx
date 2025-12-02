@@ -24,7 +24,7 @@ const data = {
       title: "Armors",
       url: "/armors/list",
       icon: Shirt,
-      isActive: true,
+      isActive: false,
       items: [
         {
           title: "List",
