@@ -9,6 +9,7 @@ interface Option {
 
 interface TagsSelectProps {
     onTagsChange: (tags: string[]) => void;
+    disabled: boolean;
 }
 
 const tags: Option[] = [
@@ -20,12 +21,13 @@ const tags: Option[] = [
     {value: 'special offer', label: 'Special Offer'}
 ];
 
-export default function TagsSelect({ onTagsChange }: TagsSelectProps) {
+export default function TagsSelect({ onTagsChange, disabled }: TagsSelectProps) {
     return (
         <MultiSelect
             options={tags}
             onValueChange={onTagsChange}
             placeholder="Choose tags..."
+            disabled={disabled}
         />
     );
 }

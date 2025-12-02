@@ -1,5 +1,5 @@
 import { Badge } from '@/components/ui/badge';
-import { Card, CardHeader, CardDescription, CardTitle, CardFooter, CardContent } from '@/components/ui/card';
+import { Card, CardHeader, CardDescription, CardTitle, CardContent } from '@/components/ui/card';
 import { Armor } from '@/src/interfaces/armor';
 
 export function ArmorCard({ armor }: { armor: Armor }) {
@@ -16,7 +16,7 @@ export function ArmorCard({ armor }: { armor: Armor }) {
                 ? <Badge variant="default" className="absolute top-0 right-0 mr-4 mt-4">{armor.rarity}</Badge>
                 : null
             }
-            <Card className='border-none'>
+            <Card className='h-64'>
                 <CardHeader>
                     <CardTitle>{armor.name}</CardTitle>
                     <CardDescription className='flex items-center gap-2'>
@@ -30,8 +30,6 @@ export function ArmorCard({ armor }: { armor: Armor }) {
                 <CardContent>
                     {armor.description}
                 </CardContent>
-                <CardFooter className='justify-between gap-3 max-sm:flex-col max-sm:items-stretch'>
-                </CardFooter>
             </Card>
         </div>
     );

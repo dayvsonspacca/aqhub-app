@@ -2,14 +2,14 @@
 
 import BreadcrumbItemProps, { AppContainer } from "@/components/app-container";
 import { ArmorCard } from "@/components/armor-card";
+import RaritiesSelect from "@/components/rarities-select";
 import TagsSelect from "@/components/tags-select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { MultiSelect } from "@/components/ui/multi-select";
 import { ArmorFilter } from "@/src/interfaces/armor";
 import Api from "@/src/server/api";
 import { useQuery } from "@tanstack/react-query";
-import { Loader } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useState } from "react";
 
 const breadcrumbs: BreadcrumbItemProps[] = [
@@ -33,27 +33,22 @@ const initialFilter: ArmorFilter = {
     tags: null
 };
 
-const tags = [
-    {value: 'legend', label: 'Legend'},
-    {value: 'ac', label: 'Adventure Coins'},
-    {value: 'rare', label: 'Rare'},
-    {value: 'pseudo rare', label: 'Pseudo Rare'},
-    {value: 'seasonal', label: 'Seasonal'},
-    {value: 'special offer', label: 'Special Offer'}
-];
-
 export default function Page() {
     const [filter, setFilter] = useState<ArmorFilter>(initialFilter);
-    const [nameInput, setNameInput] = useState<string>(filter.name || '');
+    const [nameInput, setNameInput] = useState<string>('');
     const [tagsSelect, setTagsSelect] = useState<string[]>([]);
+    const [raritiesSelect, setRaritiesSelect] = useState<string[]>([]);
 
     const handleSearch = () => {
-        const newName = nameInput.trim() || null;
+        let name = nameInput.trim() || null;
+        let tags = tagsSelect;
+        let rarities = raritiesSelect;
 
         setFilter(prevFilter => ({
-        ...prevFilter,
-            tags: tagsSelect,
-            name: newName,
+            ...prevFilter,
+            tags,
+            name,
+            rarities,
             page: 1
         }));
     };
@@ -64,26 +59,20 @@ export default function Page() {
         placeholderData: (previousData) => previousData
     })
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            handleSearch();
-        }
-    };
-
     return (
         <AppContainer breadcrumbs={breadcrumbs}>
-            <div className='w-full space-y-2'>
-                <TagsSelect onTagsChange={setTagsSelect} />
+            <div className='space-y-2'>
+                <TagsSelect onTagsChange={setTagsSelect} disabled={query.isFetching} />
+                <RaritiesSelect onRaritiesChange={setRaritiesSelect} disabled={query.isFetching} />
                 <div className='flex gap-2'>
                     <Input
                         placeholder='Armor name'
                         value={nameInput}
                         onChange={(e) => setNameInput(e.target.value)}
-                        onKeyDown={handleKeyDown as any}
                         disabled={query.isFetching}
                     />
-                    <Button onClick={handleSearch} disabled={query.isFetching}>
-                        {query.isFetching ? <Loader className="animate-spin" /> : 'Search'}
+                    <Button className="cursor-pointer" onClick={handleSearch} disabled={query.isFetching}>
+                        {query.isFetching ? <Loader2 className="animate-spin" /> : 'Search'}
                     </Button>
                 </div>
             </div>
