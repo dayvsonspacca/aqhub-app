@@ -2,11 +2,8 @@
 
 import * as React from "react"
 import {
-  BookOpen,
-  Bot,
   Command,
-  Settings2,
-  Shirt,
+  Shirt
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -17,8 +14,9 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem,
+  SidebarMenuItem
 } from "@/components/ui/sidebar"
+import { ThemeToggle } from "./theme-toggle"
 
 const data = {
   navMain: [
@@ -61,6 +59,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
+        <ThemeToggle/>
       </SidebarFooter>
     </Sidebar>
   )
