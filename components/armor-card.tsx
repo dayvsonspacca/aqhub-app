@@ -20,11 +20,22 @@ export function ArmorCard({ armor }: { armor: Armor }) {
                 <CardHeader>
                     <CardTitle>{armor.name}</CardTitle>
                     <CardDescription className='flex items-center gap-2'>
-                        {armor.tags.map(tag => (
-                            <Badge key={tag} variant='outline' className='rounded-sm'>
-                                {tag}
-                            </Badge>
-                        ))}
+                        {armor.tags.map((tag) => {
+                            const colors = {
+                                'Legend': 'bg-[#92239f]/50',
+                                'Adventure Coins': 'bg-[#ff6c00] dark:text-secondary',
+                                'Rare': 'bg-[#4c912a]',
+                                'Pseudo Rare': 'bg-[#18cf00] dark:text-secondary',
+                                'Seasonal': 'bg-[#fe1070]/50',
+                                'Special Offer': 'bg-[#f5ba1a] dark:text-secondary'
+                            };
+
+                            return (
+                                <Badge key={tag} variant='secondary' className={'rounded-sm ' + colors[tag]}>
+                                    {tag}
+                                </Badge>
+                            )
+                        })}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>

@@ -4,7 +4,7 @@ export interface Armor {
     description: string;
     registered_at: Date,
     rarity: string|null,
-    tags: string[]
+    tags: Array<'Legend' | 'Adventure Coins' | 'Rare' | 'Pseudo Rare' | 'Seasonal' | 'Special Offer'>
 }
 
 export interface ArmorFilter {
@@ -12,5 +12,5 @@ export interface ArmorFilter {
     page: number;
     page_size: number;
     rarities: null|string[];
-    tags: null|string[];
+    tags: null|Array<'Legend' | 'Adventure Coins' | 'Rare' | 'Pseudo Rare' | 'Seasonal' | 'Special Offer'>;
 }
