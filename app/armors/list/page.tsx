@@ -17,6 +17,7 @@ import {
 import ArmorsFilter from "@/components/armors-filter";
 import { Skeleton } from "@/components/ui/skeleton";
 import ArmorsFilterDetails from "@/components/armor-filter-details";
+import ApiPagination from "@/components/api-pagination";
 
 const breadcrumbs: BreadcrumbItemProps[] = [
     {
@@ -41,7 +42,7 @@ const initialFilter: ArmorFilter = {
 
 export default function Page() {
     const [filter, setFilter] = useState<ArmorFilter>(initialFilter);
-    const [activeTab, setActiveTab] = useState<string>("tab-1"); 
+    const [activeTab, setActiveTab] = useState<string>("tab-1");
 
     const handleApplyFilter = useCallback((newFilter: Omit<ArmorFilter, 'page' | 'page_size'>) => {
         setFilter(prevFilter => ({
@@ -49,8 +50,8 @@ export default function Page() {
             ...newFilter,
             page: 1,
         }));
-        
-        setActiveTab("tab-1"); 
+
+        setActiveTab("tab-1");
     }, []);
 
     const query = useQuery({
@@ -63,6 +64,16 @@ export default function Page() {
         setFilter(initialFilter);
         setActiveTab("tab-1");
     }, []);
+
+    const handlePageChange = useCallback((page: number) => {
+        setFilter(prevFilter => ({
+            ...prevFilter,
+            page: page,
+        }));
+    }, []);
+
+    const totalPages = Math.ceil((query.data?.total ?? 0) / (filter.page_size ?? 1));
+    const currentPage = filter.page;
 
     return (
         <AppContainer breadcrumbs={breadcrumbs}>
@@ -104,13 +115,25 @@ export default function Page() {
                                 ))}
                             </div >
                         ) : (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {query.data?.armors.map(armor => (
-                                    <ArmorCard key={armor.id} armor={armor} />
-                                ))}
-                            </div>
+                            <>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    {query.data?.armors.map(armor => (
+                                        <ArmorCard key={armor.id} armor={armor} />
+                                    ))}
+                                </div>
+                                {(totalPages > 1 && query.data?.armors && query.data.armors.length > 0) && (
+                                    <div className="mt-8">
+                                        <ApiPagination
+                                            currentPage={currentPage}
+                                            totalPages={totalPages}
+                                            onPageChange={handlePageChange}
+                                        />
+                                    </div>
+                                )}
+                            </>
                         )
                     }
+
                 </TabsContent>
                 <TabsContent value="tab-2">
                     <ArmorsFilter initialFilter={filter} onApplyFilter={handleApplyFilter} />

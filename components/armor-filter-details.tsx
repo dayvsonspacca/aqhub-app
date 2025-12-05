@@ -65,7 +65,7 @@ export default function ArmorsFilterDetails({ currentFilter, onClearFilter }: Ar
                             </h4>
                             <div className="flex flex-wrap gap-2">
                                 {group.values.map((value, idx) => (
-                                    <Badge key={idx} variant="secondary" className="text-sm">
+                                    <Badge key={idx} variant="outline" className="text-sm">
                                         {value}
                                     </Badge>
                                 ))}
