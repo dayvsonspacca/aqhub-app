@@ -8,8 +8,9 @@ interface Option {
 }
 
 interface RaritiesSelectProps {
-    onRaritiesChange: (tags: string[]) => void;
+    onRaritiesChange: (rarities: string[]) => void;
     disabled: boolean;
+    initialRarities?: string[] | null; 
 }
 
 const rarities: Option[] = [
@@ -27,13 +28,17 @@ const rarities: Option[] = [
     {value: 'secret', label: 'Secret'},
 ];
 
-export default function RaritiesSelect({ onRaritiesChange, disabled }: RaritiesSelectProps) {
+export default function RaritiesSelect({ onRaritiesChange, disabled, initialRarities }: RaritiesSelectProps) {
+    
+    const selectedValues = initialRarities || [];
+    
     return (
         <MultiSelect
             options={rarities}
             onValueChange={onRaritiesChange}
             placeholder="Choose rarities..."
             disabled={disabled}
+            defaultValue={selectedValues}
         />
     );
 }
