@@ -66,6 +66,7 @@ export default function Page() {
     }, []);
 
     const handlePageChange = useCallback((page: number) => {
+        window.scrollTo({ top: 0 });
         setFilter(prevFilter => ({
             ...prevFilter,
             page: page,
