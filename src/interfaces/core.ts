@@ -1,0 +1,1 @@
+export type ItemTag = 'Legend' | 'Adventure Coins' | 'Rare' | 'Pseudo Rare' | 'Seasonal' | 'Special Offer';

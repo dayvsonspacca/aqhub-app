@@ -1,15 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
-import { Armor, ArmorFilter } from "@/src/interfaces/armor";
+import { ArmorFilter, ListArmorsResponse } from "@/src/interfaces/armor";
 
 const api = axios.create({
     baseURL: 'https://aqhub-api.dayvsonspacca.com'
 });
 
 export default class Api {
-    async getArmors(filter: ArmorFilter): Promise<{
-        filter: ArmorFilter,
-        armors: Armor[]
-    }> {
+    async getArmors(filter: ArmorFilter): Promise<ListArmorsResponse> {
         const params: any = {
             page: filter.page,
             page_size: filter.page_size,
@@ -27,7 +24,7 @@ export default class Api {
             params.tags = filter.tags.join(',');
         }
 
-        const response: AxiosResponse<{ filter: ArmorFilter, armors: Armor[] }> =
+        const response: AxiosResponse<ListArmorsResponse> =
             await api.get('/armors/list', { params });
 
         return response.data;

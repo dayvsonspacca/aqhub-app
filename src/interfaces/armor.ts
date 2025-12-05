@@ -1,10 +1,12 @@
+import { ItemTag } from "@/src/interfaces/core";
+
 export interface Armor {
     id: string;
     name: string;
     description: string;
-    registered_at: Date,
+    registered_at: string,
     rarity: string|null,
-    tags: Array<'Legend' | 'Adventure Coins' | 'Rare' | 'Pseudo Rare' | 'Seasonal' | 'Special Offer'>
+    tags: Array<ItemTag>
 }
 
 export interface ArmorFilter {
@@ -12,5 +14,11 @@ export interface ArmorFilter {
     page: number;
     page_size: number;
     rarities: null|string[];
-    tags: null|Array<'Legend' | 'Adventure Coins' | 'Rare' | 'Pseudo Rare' | 'Seasonal' | 'Special Offer'>;
+    tags: null|Array<ItemTag>;
+}
+
+export interface ListArmorsResponse {
+    filter: ArmorFilter,
+    armors: Armor[],
+    total: number
 }
